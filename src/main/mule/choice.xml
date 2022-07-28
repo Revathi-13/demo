@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="choiceFlow" doc:id="53a74118-7712-4b7c-854a-38d9d7d1e117">
+		<scheduler doc:name="Scheduler" doc:id="50d09d99-8596-4034-9aa1-dfb317996d3e">
+			<scheduling-strategy>
+				<fixed-frequency frequency="10" startDelay="1" timeUnit="SECONDS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<set-payload doc:name="Set Payload" doc:id="dec6a2b0-b851-4090-bc0d-6a90b3bab671" value='#["reva"]'/>
+		<choice doc:name="Choice" doc:id="a4874b5b-9bba-4238-8ada-68047f235bc6">
+			<when expression="#[isEmpty(payload)]">
+				<set-payload value="US" doc:name="Set Payload" doc:id="bd41b300-7a5c-475c-aa6d-d3780e44879b" />
+			</when>
+			<when expression="#[payload is String]">
+				<set-payload value="EU" doc:name="Set Payload" doc:id="469f28da-a9f2-4335-a48a-11a1d7c19edc" />
+			</when>
+			<otherwise>
+				<set-payload value="TU" doc:name="Set Payload" doc:id="934b6766-6bca-41ed-88d9-7a41bbf628ba" />
+			</otherwise>
+		</choice>
+		<logger level="INFO" doc:name="Logger" doc:id="d83a2e7f-3ed0-4b85-97ed-8f3595dd376e" message="#[payload]"/>
+	</flow>
+</mule>
